@@ -1,0 +1,3 @@
+[submodule "ThirdParty/GAUSS"]
+	path = ThirdParty/GAUSS
+	url = https://github.com/dilevin/GAUSS.git
