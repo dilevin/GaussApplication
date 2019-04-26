@@ -6,16 +6,16 @@ cmake_minimum_required (VERSION 3.2)
 project(GAUSSProject)
 
 #CMake Setup 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${PROJECT_SOURCE_DIR}/ThirdParty/libigl/external/eigen CACHE PATH "Root include directory for Eigen3" FORCE) 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake CACHE PATH "Get libigil module" FORCE)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/ThirdParty/libigl/external/eigen/cmake CACHE PATH "Root include directory for Eigen3" FORCE)
-set( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${GAUSSProject}/bin )
-set( CMAKE_LIBRARY_OUTPUT_DIRECTORY ${GAUSSProject}/lib )
-set( CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${GAUSSProject}/bin )
-set( CMAKE_LIBRARY_OUTPUT_DIRECTORY_DEBUG ${GAUSSProject}/lib )
-set( CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${GAUSSProject}/bin )
-set( CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${GAUSSProject}/lib )
+set( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin )
+set( CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib )
+set( CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_BINARY_DIR}/bin )
+set( CMAKE_LIBRARY_OUTPUT_DIRECTORY_DEBUG ${PROJECT_BINARY_DIR}/lib )
+set( CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_BINARY_DIR}/bin )
+set( CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${PROJECT_BINARY_DIR}/lib )
 
 
 #Use the EIGEN library included with libigl 
@@ -41,6 +41,12 @@ option(LIBIGL_WITH_XML               "Use XML"            OFF)
 
 #Use GAUSS Qt3D powered UI
 option(GAUSS_USE_UI     "Use Gauss' UI Library" ON)
+
+#Init GUI Stuff
+if(GAUSS_USE_UI)
+    include(${PROJECT_SOURCE_DIR}/ThirdParty/GAUSS/src/UI/UISetup.txt)
+    initUI()
+endif(GAUSS_USE_UI)
 
 #Use LibIGL viewer with application
 #option(LIBIGL_WITH_OPENGL            "Use OpenGL"         ON)
@@ -73,5 +79,5 @@ include_directories(${PROJECT_SOURCE_DIR}/ThirdParty/libigl/external/glad/includ
 include_directories(${PROJECT_SOURCE_DIR}/ThirdParty/libigl/external/imgui)
 
 add_executable(GAUSSProject ${SRC_CODE} ${HEADER_CODE})
-target_link_libraries(GAUSSProject igl::core igl_tetgen igl::opengl_glfw igl::opengl_glfw_imgui utils Core Base FEM ParticleSystem ${GAUSS_LIBS}) 
+target_link_libraries(GAUSSProject igl::core igl::opengl_glfw igl::opengl_glfw_imgui Core Base FEM ParticleSystem ${GAUSS_LIBS} UI) #Remove UI if you don't want the GAUSS UI 
 
