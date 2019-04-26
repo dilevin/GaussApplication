@@ -1,4 +1,4 @@
-A sample app that can be used as jumping off point for creating applications using the GAUSS physics engine.
+A sample app that can be used as jumping off point for creating applications using the [GAUSS](https://github.com/dilevin/GAUSS/) physics engine.
 
 ### How to Use ###
 Clone this repository with 
