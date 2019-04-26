@@ -1,6 +1,5 @@
 #include <functional>
 
-#include <Qt3DIncludes.h>
 #include <GaussIncludes.h>
 #include <FEMIncludes.h>
 
@@ -19,14 +18,11 @@ using namespace ParticleSystem; //For Force Spring
 //typedef scene
 typedef PhysicalSystemFEM<double, NeohookeanTet> FEMLinearTets;
 
-typedef World<double, std::tuple<FEMLinearTets *,PhysicalSystemParticleSingle<double> *>,
+typedef World<double, std::tuple<FEMLinearTets *>,
                       std::tuple<ForceSpringFEMParticle<double> *>,
                       std::tuple<ConstraintFixedPoint<double> *> > MyWorld;
 typedef TimeStepperEulerImplicitLinear<double, AssemblerEigenSparseMatrix<double>,
 AssemblerEigenVector<double> > MyTimeStepper;
-
-typedef Scene<MyWorld, MyTimeStepper> MyScene;
-
 
 void preStepCallback(MyWorld &world) {
     // This is an example callback
@@ -56,8 +52,8 @@ int main(int argc, char **argv) {
     
     MyTimeStepper stepper(0.01);
     
-    for(unsigned int ii=0; i < 100; ++ii) {
-        stepper.step();
+    for(unsigned int ii=0; ii < 100; ++ii) {
+        stepper.step(world);
         std::cout<<"Step "<<ii<<" completed\n";
     }
 

@@ -19,7 +19,7 @@ set( CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${PROJECT_BINARY_DIR}/lib )
 
 
 #Use the EIGEN library included with libigl 
-set(EIGEN3_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/build/ThirdParty/eigen CACHE INTERNAL "" FORCE)
+set(EIGEN3_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/ThirdParty/Gauss/build/ThirdParty/eigen CACHE INTERNAL "" FORCE)
 include_directories(${EIGEN3_INCLUDE_DIR})
 
 # libigl setup
@@ -63,6 +63,8 @@ add_subdirectory(${PROJECT_SOURCE_DIR}/ThirdParty/Gauss ${CMAKE_CURRENT_BINARY_D
 
 #Add include directories you can add more if you want to use more things
 set(LIBIGL_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/ThirdParty/Gauss/ThirdParty/libigl/include CACHE FILEPATH "Root include directory for libigl")
+find_package(LIBIGL REQUIRED)
+
 include_directories(${Core_SOURCE_DIR}/include)
 include_directories(${Base_SOURCE_DIR}/include)
 include_directories(${FEM_SOURCE_DIR}/include)
@@ -79,5 +81,5 @@ include_directories(${PROJECT_SOURCE_DIR}/ThirdParty/libigl/external/glad/includ
 include_directories(${PROJECT_SOURCE_DIR}/ThirdParty/libigl/external/imgui)
 
 add_executable(GAUSSProject ${SRC_CODE} ${HEADER_CODE})
-target_link_libraries(GAUSSProject igl::core igl::opengl_glfw igl::opengl_glfw_imgui Core Base FEM ParticleSystem ${GAUSS_LIBS} UI) #Remove UI if you don't want the GAUSS UI 
+target_link_libraries(GAUSSProject Core Base FEM ParticleSystem ${GAUSS_LIBS}) #Remove UI if you don't want the GAUSS UI 
 
