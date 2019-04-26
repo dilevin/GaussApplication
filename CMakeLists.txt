@@ -7,9 +7,9 @@ project(GAUSSProject)
 
 #CMake Setup 
 set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${PROJECT_SOURCE_DIR}/../ThirdParty/libigl/external/eigen CACHE PATH "Root include directory for Eigen3" FORCE) 
-set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/../cmake CACHE PATH "Get libigil module" FORCE)
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/../ThirdParty/libigl/external/eigen/cmake CACHE PATH "Root include directory for Eigen3" FORCE)
+set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${PROJECT_SOURCE_DIR}/ThirdParty/libigl/external/eigen CACHE PATH "Root include directory for Eigen3" FORCE) 
+set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake CACHE PATH "Get libigil module" FORCE)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/ThirdParty/libigl/external/eigen/cmake CACHE PATH "Root include directory for Eigen3" FORCE)
 set( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${GAUSSProject}/bin )
 set( CMAKE_LIBRARY_OUTPUT_DIRECTORY ${GAUSSProject}/lib )
 set( CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${GAUSSProject}/bin )
@@ -39,32 +39,24 @@ option(LIBIGL_WITH_TRIANGLE          "Use Triangle"       OFF)
 option(LIBIGL_WITH_XML               "Use XML"            OFF)
 
 
+#Use GAUSS Qt3D powered UI
+option(GAUSS_USE_UI     "Use Gauss' UI Library" ON)
+
 #Use LibIGL viewer with application
 #option(LIBIGL_WITH_OPENGL            "Use OpenGL"         ON)
 #option(LIBIGL_WITH_OPENGL_GLFW       "Use GLFW"           ON)
 #option(LIBIGL_WITH_OPENGL_GLFW_IMGUI "Use ImGui"          ON)
 #option(LIBIGL_WITH_VIEWER            "Use OpenGL viewer"  ON)
 
-# Don't use LibIGL viewer with application
-option(LIBIGL_WITH_OPENGL_GLFW_IMGUI "Use ImGui"          OFF)
-option(LIBIGL_WITH_OPENGL            "Use OpenGL"         OFF)
-option(LIBIGL_WITH_OPENGL_GLFW       "Use GLFW"           OFF)
-option(LIBIGL_WITH_VIEWER            "Use OpenGL viewer"  OFF)
-
-#Use GAUSS Qt3D powered UI
-option(GAUSS_USE_UI     "Use Gauss' UI Library" ON)
-
 #Some other GAUSS options you could use
-option(GAUSS_USE_PARDISO "Use Pardiso if available" OFF)
-option(GAUSS_USE_GUROBI "Use Gurobi optimization package if available" OFF)
-
-set(LIBIGL_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/../ThirdParty/libigl/include CACHE FILEPATH "Root include directory for libigl")
-find_package(LIBIGL REQUIRED QUIET)
+option(USE_PARDISO "Use Pardiso if available" OFF)
+option(USE_GUROBI "Use Gurobi optimization package if available" OFF)
 
 # Get Gauss as a subdirectory
-add_subdirectory(${PROJECT_SOURCE_DIR}/../ThirdParty/Gauss ${CMAKE_CURRENT_BINARY_DIR}/Gauss)
+add_subdirectory(${PROJECT_SOURCE_DIR}/ThirdParty/Gauss ${CMAKE_CURRENT_BINARY_DIR}/Gauss)
 
 #Add include directories you can add more if you want to use more things
+set(LIBIGL_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/ThirdParty/Gauss/ThirdParty/libigl/include CACHE FILEPATH "Root include directory for libigl")
 include_directories(${Core_SOURCE_DIR}/include)
 include_directories(${Base_SOURCE_DIR}/include)
 include_directories(${FEM_SOURCE_DIR}/include)
@@ -77,8 +69,8 @@ file(GLOB SRC_CODE ${PROJECT_SOURCE_DIR}/*.cpp)
 
 include_directories(${LIBIGL_INCLUDE_DIR})
 #These are needed for libigls viewer support 
-include_directories(${PROJECT_SOURCE_DIR}/../ThirdParty/libigl/external/glad/include)
-include_directories(${PROJECT_SOURCE_DIR}/../ThirdParty/libigl/external/imgui)
+include_directories(${PROJECT_SOURCE_DIR}/ThirdParty/libigl/external/glad/include)
+include_directories(${PROJECT_SOURCE_DIR}/ThirdParty/libigl/external/imgui)
 
 add_executable(GAUSSProject ${SRC_CODE} ${HEADER_CODE})
 target_link_libraries(GAUSSProject igl::core igl_tetgen igl::opengl_glfw igl::opengl_glfw_imgui utils Core Base FEM ParticleSystem ${GAUSS_LIBS}) 
