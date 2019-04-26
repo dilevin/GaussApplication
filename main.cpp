@@ -56,12 +56,11 @@ int main(int argc, char **argv) {
     
     MyTimeStepper stepper(0.01);
     
-    //Display
-    QGuiApplication app(argc, argv);
-    
-    MyScene *scene = new MyScene(&world, &stepper, preStepCallback);
-    GAUSSVIEW(scene);
-    
-    return app.exec();
+    for(unsigned int ii=0; i < 100; ++ii) {
+        stepper.step();
+        std::cout<<"Step "<<ii<<" completed\n";
+    }
+
+    return 1; 
 }
 

@@ -39,8 +39,8 @@ option(LIBIGL_WITH_TRIANGLE          "Use Triangle"       OFF)
 option(LIBIGL_WITH_XML               "Use XML"            OFF)
 
 
-#Use GAUSS Qt3D powered UI
-option(GAUSS_USE_UI     "Use Gauss' UI Library" ON)
+#Use GAUSS Qt3D powered UI if you want 
+option(GAUSS_USE_UI     "Use Gauss' UI Library" OFF)
 
 #Init GUI Stuff
 if(GAUSS_USE_UI)
